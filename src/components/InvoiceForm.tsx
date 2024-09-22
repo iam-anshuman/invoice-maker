@@ -34,6 +34,11 @@ export default function InvoiceForm() {
       return <DownloadInvoice invoiceData={data}/>
   }
 
+  function handleRemoveItem(index: number){
+    const updatedItems = addedItems?.filter((_, i) => i !== index);
+    setAddedItems(updatedItems);
+  }
+
   return (
     <div className="container mx-auto p-4 space-y-6">
       <Card>
@@ -246,13 +251,13 @@ export default function InvoiceForm() {
                 <div className='bg-zinc-900 p-2'>Remove Item</div>
               </div>
                     {addedItems.map((item, index) => (
-                      <div key={`item-${index}`}>
+                      <div key={`item-${item.id}`}>
                         <div className="grid grid-cols-6 border">
                         <div className='bg-zinc-800 p-2'>{item.description}</div>
                         <div className='bg-zinc-800 p-2'>{item.quantity}</div>
                         <div className='bg-zinc-800 p-2'>{item.taxRate}</div>
                         <div className='bg-zinc-800 p-2'>{item.unitPrice}</div>
-                        <div className='bg-zinc-800 p-2'><Trash2/></div>
+                        <div className='bg-zinc-800 p-2' onClick={()=>handleRemoveItem(index)}><Trash2/></div>
                       </div>
                     </div> 
                     )

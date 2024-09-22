@@ -11,9 +11,11 @@ import {
 } from "@/components/ui/select"
 import { z } from 'zod'
 import { itemSchema } from "@/lib/types"
-import { useState } from "react"
+import {useState } from "react"
+import {v4 as uuidv4 } from "uuid";
 
 const ZodItemSchema = z.object({
+  id:z.string().min(1,"Id is required"),
   description: z.string().min(1, "Item Name is required"),
   unitPrice: z.string().min(1, "Unit price is required"),
   quantity: z.string().min(1, "Quantity is required"),
@@ -26,6 +28,7 @@ interface ItemProps {
 
 export default function Item({ setAddedItems }: Readonly<ItemProps>) {
   const [item, setItem] = useState<itemSchema>({
+    id:uuidv4(),
     description: "",
     unitPrice: "",
     quantity: "",
@@ -60,6 +63,7 @@ export default function Item({ setAddedItems }: Readonly<ItemProps>) {
     setErrors({});
     setAddedItems((prevItems) => (prevItems ? [...prevItems, item] : [item]));
     setItem({
+      id:uuidv4(),
       description: "",
       unitPrice: "",
       quantity: "",
